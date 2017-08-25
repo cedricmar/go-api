@@ -1,4 +1,4 @@
-package services
+package utils
 
 import (
 	"database/sql"
@@ -12,11 +12,10 @@ func DBConnect() *sql.DB {
 	if db != nil {
 		return db
 	}
-	conn, err := sql.Open("mysql", "admin:130779@/api")
+	conn, err := sql.Open("mysql", "admin:130779@tcp(database:3306)/api")
 	if err != nil {
 		panic(err)
 	}
-	defer conn.Close()
 	db = conn
 	return conn
 }

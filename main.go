@@ -1,13 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/weebagency/go-api/controllers"
-	"github.com/weebagency/go-api/services"
 )
 
 func main() {
@@ -17,9 +15,7 @@ func main() {
 
 	r := mux.NewRouter()
 
-	db := services.DBConnect()
-
-	fmt.Printf("%v\n", db)
+	// db := utils.DBConnect()
 
 	// Routes
 	r.HandleFunc("/", hello.Index).Methods("GET")

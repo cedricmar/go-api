@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"apps/api/models"
+	"github.com/weebagency/go-api/models"
 )
 
 // InfoController extends Controller

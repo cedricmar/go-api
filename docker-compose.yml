@@ -6,8 +6,8 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - .:/go/src/apps/api
-    working_dir: /go/src/apps/api
+      - .:/go/src/github.com/weebagency/go-api
+    working_dir: /go/src/github.com/weebagency/go-api
     # command: go run main.go
     command: fresh
   db:

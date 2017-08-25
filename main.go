@@ -1,15 +1,13 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 	"net/http"
 
-	"apps/api/controllers"
-
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
+	"github.com/weebagency/go-api/controllers"
+	"github.com/weebagency/go-api/services"
 )
 
 func main() {
@@ -19,10 +17,7 @@ func main() {
 
 	r := mux.NewRouter()
 
-	db, err := sql.Open("mysql", "admin:130779@/api")
-	if err != nil {
-		panic(err)
-	}
+	db := services.DBConnect()
 
 	fmt.Printf("%v\n", db)
 

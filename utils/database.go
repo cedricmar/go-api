@@ -1,18 +1,17 @@
 package utils
 
 import (
-	"database/sql"
-
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
-var db *sql.DB
+var db *sqlx.DB
 
-func DBConnect() *sql.DB {
-	conn, err := sql.Open("mysql", "admin:130779@tcp(database:3306)/api")
+// DBConnect returns db connection
+func DBConnect() *sqlx.DB {
+	db, err := sqlx.Connect("mysql", "admin:password@tcp(database:3306)/api")
 	if err != nil {
 		panic(err)
 	}
-	db = conn
-	return conn
+	return db
 }

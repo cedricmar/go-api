@@ -11,4 +11,4 @@ RUN go get github.com/pilu/fresh
 
 ADD . /go/src/apps/api
 RUN cd /go/src/apps/api && \
-    go get
+    go get ./...

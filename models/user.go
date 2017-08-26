@@ -4,8 +4,8 @@ import "github.com/weebagency/go-api/utils"
 
 type User struct {
 	Id        int
-	LastName  string `json:"last_name"`
-	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name" db:"last_name"`
+	FirstName string `json:"first_name" db:"first_name"`
 	Address   string `json:"address"`
 	City      string `json:city`
 }
@@ -13,6 +13,7 @@ type User struct {
 func GetUsers() []*User {
 	// Get Users
 	db := utils.DBConnect()
+	defer db.Close()
 	rows, err := db.Query("SELECT * FROM user")
 	utils.LogFatal(err)
 	// Map DB data to User type

@@ -9,9 +9,6 @@ import (
 var db *sql.DB
 
 func DBConnect() *sql.DB {
-	if db != nil {
-		return db
-	}
 	conn, err := sql.Open("mysql", "admin:130779@tcp(database:3306)/api")
 	if err != nil {
 		panic(err)

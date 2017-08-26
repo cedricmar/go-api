@@ -6,6 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/weebagency/go-api/controllers"
+	"github.com/weebagency/go-api/migrate"
 )
 
 func main() {
@@ -15,7 +16,7 @@ func main() {
 
 	r := mux.NewRouter()
 
-	// db := utils.DBConnect()
+	migrate.Up()
 
 	// Routes
 	r.HandleFunc("/", hello.Index).Methods("GET")

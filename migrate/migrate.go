@@ -19,7 +19,6 @@ func Up() {
 }
 
 func Run(filter func([]os.FileInfo) []string) {
-	db := utils.DBConnect()
 	dir, err := filepath.Abs("./migrate/")
 	utils.LogFatal(err)
 
@@ -29,6 +28,7 @@ func Run(filter func([]os.FileInfo) []string) {
 	migs := filter(files)
 
 	// Execute migrations
+	db := utils.DBConnect()
 	if len(migs) > 0 {
 		for _, file := range migs {
 			// Read file
@@ -39,7 +39,7 @@ func Run(filter func([]os.FileInfo) []string) {
 			stmts := strings.Split(string(dat), ";")
 			stmts = stmts[:len(stmts)-1]
 
-			// Run QUERIES
+			// Run Queries
 			fmt.Println("Running migration", file)
 			for _, stmt := range stmts {
 				_, err = db.Exec(stmt)

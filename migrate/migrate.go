@@ -1,8 +1,8 @@
 package migrate
 
 import (
-	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -29,28 +29,21 @@ func Run(filter func([]os.FileInfo) []string) {
 
 	// Execute migrations
 	db := utils.DBConnect()
+	defer db.Close()
 	if len(migs) > 0 {
+		log.Println("--- Running Migration ----")
 		for _, file := range migs {
 			// Read file
-			dat, err := ioutil.ReadFile(dir + "/" + file)
+			schema, err := ioutil.ReadFile(dir + "/" + file)
 			utils.LogFatal(err)
-
-			// Get Statements
-			stmts := strings.Split(string(dat), ";")
-			stmts = stmts[:len(stmts)-1]
-
 			// Run Queries
-			fmt.Println("Running migration", file)
-			for _, stmt := range stmts {
-				_, err = db.Exec(stmt)
-				utils.LogFatal(err)
-			}
+			log.Println("---", file)
+			db.MustExec(string(schema))
 		}
 	} else {
-		fmt.Println("No migration(s) to run")
+		log.Println("No migration(s) to run")
 	}
-	db.Close()
-	fmt.Println("migration finished with status")
+	log.Println("--- Migrations - Done ---")
 }
 
 func getUpList(files []os.FileInfo) []string {

@@ -10,21 +10,14 @@ type User struct {
 	City      string `json:city`
 }
 
-func GetUsers() []*User {
-	// Get Users
+func GetUsers() []User {
+
+	// Get DB
 	db := utils.DBConnect()
 	defer db.Close()
-	rows, err := db.Query("SELECT * FROM user")
-	utils.LogFatal(err)
-	// Map DB data to User type
-	var users []*User
-	for rows.Next() {
-		u := new(User)
-		err := rows.Scan(&u.Id, &u.LastName, &u.FirstName, &u.Address, &u.City)
-		utils.LogFatal(err)
 
-		users = append(users, u)
-	}
-	rows.Close()
+	// Get Users
+	users := []User{}
+	db.Select(&users, "SELECT * FROM user")
 	return users
 }

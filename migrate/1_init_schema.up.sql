@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS user (
     city VARCHAR(255) ,
     PRIMARY KEY (id)
 );
-DELETE FROM user;
-INSERT INTO user (id, last_name, first_name, address, city)
-VALUES (1, "Maruejol", "Cedric", "rue des fesses", "fesseland");
+# DELETE FROM user;
+# INSERT INTO user (id, last_name, first_name, address, city)
+# VALUES (1, "Maruejol", "Cedric", "rue des fesses", "fesseland");

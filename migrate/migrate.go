@@ -1,65 +1,52 @@
 package migrate
 
 import (
-	"io/ioutil"
 	"log"
-	"os"
-	"path/filepath"
-	"strings"
 
 	"github.com/weebagency/go-api/utils"
+	"github.com/weebagency/go-api/utils/cli"
 )
 
+// Migrations are the schema updates
+// @TODO - Avoid keeping a registry
+var Migrations = map[int]func(){
+	1: InitSchema,
+}
+
+// Seeds are the data updates
+// @TODO - Avoid keeping a registry
+var Seeds = map[int]func(){
+	1: cli.Seed,
+}
+
 func Down() {
-	Run(getDownList)
+	run(false)
 }
 
 func Up() {
-	Run(getUpList)
+	run(true)
 }
 
-func Run(filter func([]os.FileInfo) []string) {
-	dir, err := filepath.Abs("./migrate/")
-	utils.LogFatal(err)
-
-	// Get migration files
-	files, err := ioutil.ReadDir(dir)
-	utils.LogFatal(err)
-	migs := filter(files)
-
+func run(u bool) {
 	// Execute migrations
 	db := utils.DBConnect()
 	defer db.Close()
-	if len(migs) > 0 {
+
+	log.Println(Migrations)
+
+	if len(Migrations) > 0 {
 		log.Println("--- Running Migration ----")
-		for _, file := range migs {
-			// Read file
-			schema, err := ioutil.ReadFile(dir + "/" + file)
-			utils.LogFatal(err)
-			// Run Queries
-			log.Println("---", file)
-			db.MustExec(string(schema))
+		for i := 0; i < len(Migrations); i++ {
+			version := i + 1
+			log.Println("--- Running version", version, "---")
+			// Run migration
+			Migrations[version]()
+			// Seed
+			log.Println(Seeds)
+			Seeds[version]()
 		}
 	} else {
 		log.Println("No migration(s) to run")
 	}
 	log.Println("--- Migrations - Done ---")
-}
-
-func getUpList(files []os.FileInfo) []string {
-	return getList(".up.sql", files)
-}
-
-func getDownList(files []os.FileInfo) []string {
-	return getList(".down.sql", files)
-}
-
-func getList(pat string, files []os.FileInfo) []string {
-	var list []string
-	for _, file := range files {
-		if strings.Contains(file.Name(), pat) {
-			list = append(list, file.Name())
-		}
-	}
-	return list
 }

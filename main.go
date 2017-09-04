@@ -16,6 +16,7 @@ func main() {
 
 	r := mux.NewRouter()
 
+	// @TODO - make a command of that
 	migrate.Up()
 
 	// Routes

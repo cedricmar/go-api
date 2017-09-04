@@ -6,8 +6,7 @@ type User struct {
 	Id        int
 	LastName  string `json:"last_name" db:"last_name"`
 	FirstName string `json:"first_name" db:"first_name"`
-	Address   string `json:"address"`
-	City      string `json:city`
+	Email     string `json:"email" db:"email"`
 }
 
 func GetUsers() []User {
@@ -18,6 +17,7 @@ func GetUsers() []User {
 
 	// Get Users
 	users := []User{}
-	db.Select(&users, "SELECT * FROM user")
+	err := db.Select(&users, "SELECT * FROM user")
+	utils.LogFatal(err)
 	return users
 }

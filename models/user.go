@@ -1,6 +1,6 @@
 package models
 
-import "github.com/weebagency/go-api/utils"
+import "github.com/cedricmar/go-api/utils"
 
 type User struct {
 	Id        int

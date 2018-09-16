@@ -1,7 +1,7 @@
 package migrate
 
 import (
-	"github.com/weebagency/go-api/utils"
+	"github.com/cedricmar/go-api/utils"
 )
 
 // InitSchema is a migration function

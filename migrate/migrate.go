@@ -3,8 +3,8 @@ package migrate
 import (
 	"log"
 
-	"github.com/weebagency/go-api/utils"
-	"github.com/weebagency/go-api/utils/cli"
+	"github.com/cedricmar/go-api/utils"
+	"github.com/cedricmar/go-api/utils/cli"
 )
 
 // Migrations are the schema updates

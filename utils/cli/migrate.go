@@ -3,8 +3,8 @@ package cli
 import (
 	"log"
 
-	"github.com/weebagency/go-api/models"
-	"github.com/weebagency/go-api/utils"
+	"github.com/cedricmar/go-api/models"
+	"github.com/cedricmar/go-api/utils"
 )
 
 var jane = &models.User{

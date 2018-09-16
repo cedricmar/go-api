@@ -5,13 +5,13 @@ services:
     build: .
     ports:
       - "8080:8080"
-    links:
-      - db:database
     volumes:
       - .:/go/src/github.com/weebagency/go-api
     working_dir: /go/src/github.com/weebagency/go-api
     # command: go run main.go
     command: fresh
+    depends_on:
+      - db
   db:
     image: mysql:8
     ports:

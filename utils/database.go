@@ -12,5 +12,5 @@ func DBConnect() *sqlx.DB {
 	if db != nil {
 		return db
 	}
-	return sqlx.MustConnect("mysql", "admin:password@tcp(database:3306)/api")
+	return sqlx.MustConnect("mysql", "admin:password@tcp(db:3306)/api")
 }

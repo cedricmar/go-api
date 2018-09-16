@@ -14,7 +14,7 @@ func up() {
 	defer db.Close()
 	tx := db.MustBegin()
 	// CREATE USER TABLE
-	tx.MustExec("DROP TABLE user")
+	tx.MustExec("DROP TABLE IF EXISTS user")
 	tx.MustExec(`CREATE TABLE user (
 		id INT(11) NOT NULL auto_increment,
 		last_name VARCHAR(255) NOT NULL,
